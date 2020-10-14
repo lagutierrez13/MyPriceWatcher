@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,16 +30,6 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         super(context, resourceId, items);
     }
 
-    public interface ItemClickListener {
-        void itemClicked(Item item);
-    }
-
-    private ItemClickListener listener;
-
-    public void setItemClikListener(ItemClickListener listener) {
-        this.listener = listener;
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -51,14 +40,6 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             addedTextView = convertView.findViewById(R.id.addedTextView);
             launchUrlButton = convertView.findViewById(R.id.launchUrlButton);
 
-            launchUrlButton.setOnClickListener(view -> {
-                ImageButton cb = (ImageButton) view;
-                Item item = (Item) cb.getTag();
-                item.getUrl();
-                if (listener != null) {
-                    listener.itemClicked(item);
-                }
-            });
 //            launchUrlButton.setOnClickListener(view -> {
 //                ImageButton launchUrl = (ImageButton) view;
 //                Item item = (Item) launchUrl.getTag();
@@ -69,19 +50,20 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         Item current = getItem(position);
         nameTextView = convertView.findViewById(R.id.nameTextView);
+        assert current != null;
         nameTextView.setText(current.getName());
         nameTextView.setTag(current);
 
         priceTextView = convertView.findViewById(R.id.priceTextView);
-        priceTextView.setText("Price: " + String.valueOf(current.getCurrentPrice()));
+        priceTextView.setText(String.format("Current Price: %s\nOriginal Price: %s", current.getCurrentPrice(), current.getInitPrice()));
         priceTextView.setTag(current);
 
         changeTextView = convertView.findViewById(R.id.changeTextView);
-        changeTextView.setText(String.valueOf(current.getChange()));
+        changeTextView.setText(current.getChange());
         changeTextView.setTag(current);
 
         addedTextView = convertView.findViewById(R.id.addedTextView);
-        addedTextView.setText(current.getDateAdded());
+        addedTextView.setText(String.format("Date added: %s", current.getDateAdded()));
         addedTextView.setTag(current);
 
         return convertView;

@@ -14,7 +14,7 @@ public class Item {
     private String name;
     private double initPrice;
     private double currentPrice;
-    private double change;
+    private String change;
     private String url;
     private String dateAdded;
     private String sourceName;
@@ -64,8 +64,8 @@ public class Item {
         return currentPrice;
     }
 
-    public double getChange(){
-        return change;
+    public String getChange(){
+        return calculateChange();
     }
 
     public String getUrl(){
@@ -96,11 +96,28 @@ public class Item {
 
     //endregion
 
-    private double calculateChange(){
+    private String calculateChange(){
+        String perDifStr;
         if(initPrice == 0 || (Double)currentPrice == null || (Double)initPrice == null){
-            return 0;
+            perDifStr = "Price Haven't Changed";
+            return perDifStr;
         }else{
-            return ((currentPrice - initPrice) / initPrice) * 100;
+            double percDif = ((currentPrice - initPrice) / initPrice) * 100;
+            percDif = Math.round(percDif * 100d) /100d;
+
+            if (percDif == 0){
+                perDifStr = "Price Haven't Changed";
+                return perDifStr;
+            }
+            else if (percDif < 0){
+                percDif = percDif * -1;
+                perDifStr = "It is " + percDif + "% more expensive.";
+                return perDifStr;
+            }
+            else{
+                perDifStr = "It is " + percDif + "% cheaper.";
+                return perDifStr;
+            }
         }
     }
 

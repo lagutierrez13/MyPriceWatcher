@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         itemListView = findViewById(R.id.itemListView);
 
+
         itemListView.setAdapter(itemAdapter);
         itemListView.setOnItemClickListener((parent, view, position, id) -> {
             Item itemClicked = (Item) parent.getItemAtPosition(position);

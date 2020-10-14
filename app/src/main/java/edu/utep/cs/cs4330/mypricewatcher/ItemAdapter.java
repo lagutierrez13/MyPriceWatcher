@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,9 +25,20 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private TextView changeTextView;
     private TextView addedTextView;
     private ImageButton launchUrlButton;
+    private TextView productText;
 
     public ItemAdapter(Context context, int resourceId, List<Item> items) {
         super(context, resourceId, items);
+    }
+
+    public interface ItemClickListener {
+        void itemClicked(Item item);
+    }
+
+    private ItemClickListener listener;
+
+    public void setItemClikListener(ItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -39,6 +51,14 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             addedTextView = convertView.findViewById(R.id.addedTextView);
             launchUrlButton = convertView.findViewById(R.id.launchUrlButton);
 
+            launchUrlButton.setOnClickListener(view -> {
+                ImageButton cb = (ImageButton) view;
+                Item item = (Item) cb.getTag();
+                item.getUrl();
+                if (listener != null) {
+                    listener.itemClicked(item);
+                }
+            });
 //            launchUrlButton.setOnClickListener(view -> {
 //                ImageButton launchUrl = (ImageButton) view;
 //                Item item = (Item) launchUrl.getTag();
@@ -53,7 +73,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         nameTextView.setTag(current);
 
         priceTextView = convertView.findViewById(R.id.priceTextView);
-        priceTextView.setText(String.valueOf(current.getCurrentPrice()));
+        priceTextView.setText("Price: " + String.valueOf(current.getCurrentPrice()));
         priceTextView.setTag(current);
 
         changeTextView = convertView.findViewById(R.id.changeTextView);

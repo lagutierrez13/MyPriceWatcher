@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="15dp"
-    android:layout_marginEnd="15dp"
+    android:background="@color/grey"
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="0dp"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/listNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:text="@string/listNameTextViewText"
         android:textSize="24sp"
@@ -45,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="@string/choose_list_button_content_description"
-            android:src="@mipmap/choose_list_icon" />
+            android:src="@android:drawable/ic_input_get" />
 
         <ImageButton
             android:id="@+id/filterItemsButton"
@@ -56,7 +58,7 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/filter_list_button_content_description"
-            android:src="@mipmap/filter_list_icon" />
+            android:src="@android:drawable/ic_menu_more" />
 
         <ImageButton
             android:id="@+id/sortItemsButton"
@@ -65,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:contentDescription="@string/sort_list_button_content_description"
-            android:src="@mipmap/sort_list_icon" />
+            android:src="@android:drawable/ic_menu_sort_by_size" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

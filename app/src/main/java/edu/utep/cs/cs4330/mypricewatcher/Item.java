@@ -1,5 +1,7 @@
 package edu.utep.cs.cs4330.mypricewatcher;;
 
+import android.widget.ImageButton;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +19,8 @@ public class Item {
     private String dateAdded;
     private String sourceName;
     private PriceFinder priceFinder;
+    private ImageButton launchUrlButton;
+
 
     //region Constructors
 
@@ -34,7 +38,7 @@ public class Item {
     public Item(String name, String url, String sourceName){
         priceFinder = new PriceFinder();
         this.name = name;
-        this.initPrice = priceFinder.findPrice();
+        this.initPrice = priceFinder.findPrice(url);
         this.currentPrice = this.initPrice;
         this.url = url;
         this.sourceName = sourceName;
@@ -55,6 +59,8 @@ public class Item {
     }
 
     public double getCurrentPrice(){
+        priceFinder = new PriceFinder();
+        currentPrice = priceFinder.findPrice(url);
         return currentPrice;
     }
 
@@ -83,7 +89,7 @@ public class Item {
     }
 
     private String setDateAdded(){
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Date date = new Date();
         return dateFormat.format(date);
     }
@@ -99,7 +105,7 @@ public class Item {
     }
 
     public void refresh(){
-        currentPrice = priceFinder.findPrice();
+        currentPrice = priceFinder.findPrice(url);
         change = calculateChange();
     }
 }

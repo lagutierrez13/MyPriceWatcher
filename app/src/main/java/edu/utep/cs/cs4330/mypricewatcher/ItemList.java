@@ -37,8 +37,8 @@ public class ItemList {
         }
     }
 
-    public void removeItem(){
-
+    public void removeItem(Item item){
+        items.remove(item);
     }
 
     public List<Item> sortByItemName(){

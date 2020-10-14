@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         itemAdapter = new ItemAdapter(this, R.layout.item, ItemListManager.getCurrentList().getItems());
 
         itemListView = findViewById(R.id.itemListView);
+
         itemListView.setAdapter(itemAdapter);
         itemListView.setOnItemClickListener((parent, view, position, id) -> {
             Item itemClicked = (Item) parent.getItemAtPosition(position);
@@ -75,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        initializeUI();
     }
+
+
 
 //    public void initializeUI(){
 //

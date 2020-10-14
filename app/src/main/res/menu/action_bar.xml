@@ -5,21 +5,25 @@
         android:id="@+id/action_refresh"
         android:icon="@android:drawable/ic_popup_sync"
         android:title="@string/action_refresh"
+        android:onClick="onRefreshClick"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_new_list"
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/action_new_list"
+        android:onClick="addListOnClick"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/action_add_item"
         app:showAsAction="never"
+        android:onClick="addItemOnClick"
         android:title="@string/action_add_item" />
 
     <item
         android:id="@+id/action_quit"
-        app:showAsAction="never"
-        android:title="@string/action_quit" />
+        android:title="@string/action_quit"
+        android:onClick="onQuitClick"
+        app:showAsAction="never" />
 </menu>

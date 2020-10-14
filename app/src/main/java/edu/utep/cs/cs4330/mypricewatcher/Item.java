@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /*
-    Author: Luis Gutierrez
+    Authors: Luis Gutierrez and Antonio Zavala
     Class: CS4330
  */
 public class Item {
@@ -98,7 +98,7 @@ public class Item {
 
     private String calculateChange(){
         String perDifStr;
-        if(initPrice == 0 || (Double)currentPrice == null || (Double)initPrice == null){
+        if(initPrice == 0){
             perDifStr = "Price Haven't Changed";
             return perDifStr;
         }else{

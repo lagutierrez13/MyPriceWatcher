@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /*
-    Author: Luis Gutierrez
+    Authors: Luis Gutierrez and Antonio Zavala
     Class: CS4330
  */
 /** Provide views for an AdapterView by returning a view

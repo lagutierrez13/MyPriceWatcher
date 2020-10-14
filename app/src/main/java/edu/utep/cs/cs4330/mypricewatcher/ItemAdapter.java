@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /*
-    Author: Luis Gutierrez
+    Authors: Luis Gutierrez and Antonio Zavala
     Class: CS4330
  */
 /** Provide views for an AdapterView by returning a view
@@ -24,6 +24,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private TextView changeTextView;
     private TextView addedTextView;
     private ImageButton launchUrlButton;
+    private TextView productText;
 
     public ItemAdapter(Context context, int resourceId, List<Item> items) {
         super(context, resourceId, items);
@@ -49,19 +50,20 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         Item current = getItem(position);
         nameTextView = convertView.findViewById(R.id.nameTextView);
+        assert current != null;
         nameTextView.setText(current.getName());
         nameTextView.setTag(current);
 
         priceTextView = convertView.findViewById(R.id.priceTextView);
-        priceTextView.setText(String.valueOf(current.getCurrentPrice()));
+        priceTextView.setText(String.format("Current Price: %s\nOriginal Price: %s", current.getCurrentPrice(), current.getInitPrice()));
         priceTextView.setTag(current);
 
         changeTextView = convertView.findViewById(R.id.changeTextView);
-        changeTextView.setText(String.valueOf(current.getChange()));
+        changeTextView.setText(current.getChange());
         changeTextView.setTag(current);
 
         addedTextView = convertView.findViewById(R.id.addedTextView);
-        addedTextView.setText(current.getDateAdded());
+        addedTextView.setText(String.format("Date added: %s", current.getDateAdded()));
         addedTextView.setTag(current);
 
         return convertView;

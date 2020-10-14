@@ -1,6 +1,5 @@
 package edu.utep.cs.cs4330.mypricewatcher;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ActionMenuView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -21,7 +22,7 @@ import android.widget.Toast;
 import java.util.Arrays;
 
 /*
-    Author: Luis Gutierrez
+    Authors: Luis Gutierrez and Antonio Zavala
     Class: CS4330
  */
 public class MainActivity extends AppCompatActivity {
@@ -30,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton filterItemsButton;
     private ImageButton sortItemsButton;
     private ListView itemListView;
-
     private ItemListManager itemListManager;
     private ItemAdapter itemAdapter;
+    private ActionMenuView menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         itemAdapter = new ItemAdapter(this, R.layout.item, ItemListManager.getCurrentList().getItems());
 
         itemListView = findViewById(R.id.itemListView);
+
         itemListView.setAdapter(itemAdapter);
         itemListView.setOnItemClickListener((parent, view, position, id) -> {
             Item itemClicked = (Item) parent.getItemAtPosition(position);
@@ -75,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        initializeUI();
     }
+
+
 
 //    public void initializeUI(){
 //
@@ -133,6 +137,33 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(menuItem);
         }
+    }
+
+
+    public void onQuitClick(MenuItem item) {
+        finish();
+        System.exit(0);
+    }
+
+    public void addListOnClick(MenuItem item) {
+        itemListManager.addList(new ItemList("TestList2"));
+    }
+
+    public void chooseListClick(View view) {
+        itemListManager.getItemLists();
+
+    }
+
+    public void onRefreshClick(MenuItem item) {
+    }
+
+    public void addItemOnClick(MenuItem item) {
+    }
+
+    public void filterListClick(View view) {
+    }
+
+    public void sortListClick(View view) {
     }
 
     //endregion

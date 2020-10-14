@@ -37,6 +37,12 @@ public class ItemList {
         }
     }
 
+    public void refreshItems(){
+        for (Item item : items) {
+            item.refresh();
+        }
+    }
+
     public void removeItem(){
 
     }

@@ -21,8 +21,14 @@ public class Item {
     private PriceFinder priceFinder;
     private ImageButton launchUrlButton;
 
-
+    private int id;
     //region Constructors
+    public int id() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Item(String name, double initPrice, double currentPrice, String url, String sourceName, String dateAdded){
         priceFinder = new PriceFinder();

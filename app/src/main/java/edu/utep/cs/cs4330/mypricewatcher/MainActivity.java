@@ -3,23 +3,17 @@ package edu.utep.cs.cs4330.mypricewatcher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ActionMenuView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Arrays;
 
 /*
     Authors: Luis Gutierrez and Antonio Zavala
@@ -74,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         if(Intent.ACTION_SEND.equalsIgnoreCase(action) && ("text/plain".equals(type))){
             // Open menu for creating new item
         }
-
+        registerForContextMenu(itemListView);
 //        initializeUI();
     }
 
@@ -155,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRefreshClick(MenuItem item) {
+        itemAdapter.getCurrent().getCurrentPrice();
     }
 
     public void addItemOnClick(MenuItem item) {
@@ -164,6 +159,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sortListClick(View view) {
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.itemListView) {
+            ListView lv = (ListView) v;
+            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            Item item = (Item) lv.getItemAtPosition(acmi.position);
+
+            menu.add(0, item.id(), 0, "Delete");
+            menu.add(0, item.id(), 0, "Check URL");
+            //menu.add(item.)
+
+
+        }
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem mItem) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) mItem.getMenuInfo();
+        itemAdapter.notifyDataSetChanged();
+        itemAdapter.remove(itemAdapter.getItem(info.position));
+
+        Toast.makeText(this, "Item Deleted", Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     //endregion

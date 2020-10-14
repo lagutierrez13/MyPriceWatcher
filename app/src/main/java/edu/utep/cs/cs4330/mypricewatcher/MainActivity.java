@@ -134,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_quit:
                 MainActivity.this.finish();
                 System.exit(0);
+            case R.id.action_add_item:
+                // Add item popup menu
             default:
                 return super.onOptionsItemSelected(menuItem);
         }

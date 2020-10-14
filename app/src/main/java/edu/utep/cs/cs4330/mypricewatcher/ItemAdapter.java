@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -18,7 +19,6 @@ import java.util.List;
  * for each ToDoItem contained in a list. */
 public class ItemAdapter extends ArrayAdapter<Item> {
 
-    private Item current;
     private TextView nameTextView;
     private TextView priceTextView;
     private TextView changeTextView;
@@ -28,10 +28,6 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
     public ItemAdapter(Context context, int resourceId, List<Item> items) {
         super(context, resourceId, items);
-    }
-
-    public Item getCurrent() {
-        return current;
     }
 
     @Override
@@ -71,7 +67,5 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         addedTextView.setTag(current);
 
         return convertView;
-
     }
-
 }

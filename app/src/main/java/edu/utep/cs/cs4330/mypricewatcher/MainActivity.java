@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRefreshClick(MenuItem item) {
-        itemAdapter.getCurrent().getCurrentPrice();
+
     }
 
     public void addItemOnClick(MenuItem item) {

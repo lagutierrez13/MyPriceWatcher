@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         String action = getIntent().getAction();
         String type = getIntent().getType();
         if(Intent.ACTION_SEND.equalsIgnoreCase(action) && ("text/plain".equals(type))){
-
+            // Open menu for creating new item
         }
 
 //        initializeUI();

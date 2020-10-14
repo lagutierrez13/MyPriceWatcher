@@ -37,8 +37,14 @@ public class ItemList {
         }
     }
 
-    public void removeItem(Item item){
-        items.remove(item);
+    public void refreshItems(){
+        for (Item item : items) {
+            item.refresh();
+        }
+    }
+
+    public void removeItem(){
+
     }
 
     public List<Item> sortByItemName(){

@@ -16,6 +16,10 @@ public class AddItemFragment extends Fragment {
     EditText newItemName;
     EditText newItemSource;
     EditText newItemURL;
+    String name;
+    String source;
+    String url;
+
 
     @Override
     public View onCreateView(
@@ -26,6 +30,7 @@ public class AddItemFragment extends Fragment {
         newItemName = (EditText) view.findViewById(R.id.itemName);
         newItemSource = (EditText) view.findViewById(R.id.itemSource);
         newItemURL = (EditText) view.findViewById(R.id.itemURL);
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_second, container, false);
     }
@@ -34,11 +39,12 @@ public class AddItemFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        final String name = newItemName.getText().toString();
 
-        final String source = newItemSource.getText().toString();
+        name = newItemName.getText().toString();
 
-        final String url = newItemURL.getText().toString();
+        source = newItemSource.getText().toString();
+
+        url = newItemURL.getText().toString();
 
 
         view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {

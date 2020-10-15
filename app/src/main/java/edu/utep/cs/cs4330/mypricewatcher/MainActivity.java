@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ItemAdapter itemAdapter;
     private ListView itemListView;
     private ItemList list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         itemListManager.setCurrentList(list);
         //itemListView = findViewById(R.id.itemListView);
 
+        //listNameTextView.setText(list.getName());
+
         //itemAdapter = new ItemAdapter(this, R.layout.item, ItemListManager.getCurrentList().getItems());
         //itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         //    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -51,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         //});
     }
 
-    public ItemList getList(){return list;}
+    public ItemList getList(){return ItemListManager.getCurrentList();}
     public void setList(ItemList list){
         this.list = list;
     }
@@ -83,15 +87,18 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.action_new_list) {
-
+            list = new ItemList("TestList2");
+            itemListManager = new ItemListManager();
+            itemListManager.addList(list);
+            itemListManager.setCurrentList(list);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void urlOnClick(View view, int position) {
-        Toast.makeText(this, "An item of the ListView is clicked.", Toast.LENGTH_LONG).show();
+    public void urlOnClick(View view) {
+        Toast.makeText(this, "An item of the ListView is clicked.", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?tbm=isch&q=El Paso"));
         startActivity(intent);
     }

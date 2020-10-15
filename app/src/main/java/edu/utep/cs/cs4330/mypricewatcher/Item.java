@@ -1,6 +1,8 @@
 package edu.utep.cs.cs4330.mypricewatcher;;
 
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -131,4 +133,5 @@ public class Item {
         currentPrice = priceFinder.findPrice(url);
         change = calculateChange();
     }
+
 }

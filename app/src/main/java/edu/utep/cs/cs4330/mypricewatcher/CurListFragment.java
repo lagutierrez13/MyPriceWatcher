@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ public class CurListFragment extends Fragment {
    // private ItemListManager itemListManager;
     private ListView itemListView;
     private ItemAdapter itemAdapter;
+    TextView listNameTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class CurListFragment extends Fragment {
 
         itemAdapter = new ItemAdapter(getActivity(), R.layout.item, ItemListManager.getCurrentList().getItems());
 
+
+        //listNameTextView.setText(list.getName());
         //return inflater.inflate(R.layout.fragment_first, container, false);
         return view;
     }
@@ -40,6 +44,9 @@ public class CurListFragment extends Fragment {
 
         //ItemList list = ((MainActivity)getActivity()).getList();
         //itemListView = view.findViewById(R.id.itemListView);
+        //listNameTextView = listNameTextView.findViewById(R.id.listNameTextView);
+        //listNameTextView.setText(list.getName());
+
         itemListView.setAdapter(itemAdapter);
 
         registerForContextMenu(itemListView);

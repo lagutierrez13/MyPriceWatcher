@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-    Author: Luis Gutierrez
+    Authors: Luis Gutierrez Antonio Zavala
     Class: CS4330
  */
 public class ItemList {

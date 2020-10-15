@@ -40,12 +40,12 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             addedTextView = convertView.findViewById(R.id.addedTextView);
             launchUrlButton = convertView.findViewById(R.id.launchUrlButton);
 
-//            launchUrlButton.setOnClickListener(view -> {
-//                ImageButton launchUrl = (ImageButton) view;
-//                Item item = (Item) launchUrl.getTag();
-//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?tbm=isch&q=El Paso"));
-//                startActivity(intent);
-//            });
+            //launchUrlButton.setOnClickListener(view -> {
+            //    ImageButton launchUrl = (ImageButton) view;
+            //   Item item = (Item) launchUrl.getTag();
+            //    Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?tbm=isch&q=El Paso"));
+            //    startActivity(intent);
+            //});
         }
 
         Item current = getItem(position);

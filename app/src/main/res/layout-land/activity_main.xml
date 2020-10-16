@@ -1,76 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="0dp"
-    android:layout_marginEnd="0dp"
-    android:background="@color/grey"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/listNameTextView"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/listNameTextViewText"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <ListView
-        android:id="@+id/itemListView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listNameTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <LinearLayout
-        android:layout_width="211dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="296dp"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.34"
-        app:layout_constraintStart_toEndOf="@+id/listNameTextView"
-        app:layout_constraintTop_toTopOf="parent">
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <ImageButton
-            android:id="@+id/chooseListButton"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/choose_list_button_content_description"
-            android:src="@android:drawable/ic_input_get" />
+    <include layout="@layout/content_main" />
 
-        <ImageButton
-            android:id="@+id/filterItemsButton"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/filter_list_button_content_description"
-            android:src="@android:drawable/ic_menu_more" />
 
-        <ImageButton
-            android:id="@+id/sortItemsButton"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:contentDescription="@string/sort_list_button_content_description"
-            android:src="@android:drawable/ic_menu_sort_by_size" />
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

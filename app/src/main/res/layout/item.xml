@@ -64,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/cream"
+            android:onClick="urlOnClick"
             android:contentDescription="@string/launch_item_url"
             android:src="@android:drawable/ic_menu_search" />
 

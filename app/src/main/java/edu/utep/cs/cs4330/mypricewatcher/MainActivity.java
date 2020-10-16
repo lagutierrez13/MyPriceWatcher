@@ -1,170 +1,105 @@
 package edu.utep.cs.cs4330.mypricewatcher;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentActivity;
+
 import android.view.View;
-import android.widget.ActionMenuView;
+
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
-
-/*
-    Authors: Luis Gutierrez and Antonio Zavala
-    Class: CS4330
- */
 public class MainActivity extends AppCompatActivity {
-    // Buttons for pop-up menu
-    private ImageButton chooseListButton;
-    private ImageButton filterItemsButton;
-    private ImageButton sortItemsButton;
-    private ListView itemListView;
+
     private ItemListManager itemListManager;
     private ItemAdapter itemAdapter;
-    private ActionMenuView menu;
+    private ListView itemListView;
+    private ItemList list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        chooseListButton = findViewById(R.id.chooseListButton);
-        filterItemsButton = findViewById(R.id.filterItemsButton);
-        sortItemsButton = findViewById(R.id.sortItemsButton);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Item item = new Item("TestItem", "www.google.com", "Amazon");
-        ItemList list = new ItemList("TestList");
+        list = new ItemList("TestList");
+        list.addItem(item);
         list.addItem(item);
         list.addItem(item);
         itemListManager = new ItemListManager();
         itemListManager.addList(list);
         itemListManager.setCurrentList(list);
+        //itemListView = findViewById(R.id.itemListView);
 
-        itemAdapter = new ItemAdapter(this, R.layout.item, ItemListManager.getCurrentList().getItems());
+        //listNameTextView.setText(list.getName());
 
-        itemListView = findViewById(R.id.itemListView);
-
-        itemListView.setAdapter(itemAdapter);
-        itemListView.setOnItemClickListener((parent, view, position, id) -> {
-            Item itemClicked = (Item) parent.getItemAtPosition(position);
-            Toast.makeText(MainActivity.this, itemClicked.getName(), Toast.LENGTH_SHORT).show();
-        });
-
-        // Restore state if previous state exists
-        if(savedInstanceState != null){
-
-        }else{
-
-        }
-
-        // App launched due to sharing create new item in current list
-        String action = getIntent().getAction();
-        String type = getIntent().getType();
-        if(Intent.ACTION_SEND.equalsIgnoreCase(action) && ("text/plain".equals(type))){
-            // Open menu for creating new item
-        }
-
-//        initializeUI();
+        //itemAdapter = new ItemAdapter(this, R.layout.item, ItemListManager.getCurrentList().getItems());
+        //itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //        Toast.makeText(getApplication(), "An item of the ListView is clicked.", Toast.LENGTH_LONG).show();
+        //    }
+        //});
     }
 
-
-
-//    public void initializeUI(){
-//
-//    }
-
-//    public void updatePriceUI(){
-//
-//    }
-
-    //region Overrides
-
-    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState){
-
-        super.onSaveInstanceState(savedInstanceState);
+    public ItemList getList(){return ItemListManager.getCurrentList();}
+    public void setList(ItemList list){
+        this.list = list;
+    }
+    public void addToList(Item item){
+        list.addItem(item);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            toggleActionBar();
-//        }
-//        return true;
-//    }
-//
-//    private void toggleActionBar() {
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            if (actionBar.isShowing()) {
-//                actionBar.hide();
-//            } else {
-//                actionBar.show();
-//            }
-//        }
-//    }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem){
-        switch(menuItem.getItemId()){
-            case R.id.action_refresh:
-                // refresh all currentList items
-                return true;
-            case R.id.action_new_list:
-                // create new list
-                return true;
-            case R.id.action_quit:
-                MainActivity.this.finish();
-                System.exit(0);
-            default:
-                return super.onOptionsItemSelected(menuItem);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_quit) {
+            finish();
+            System.exit(0);
+            return true;
         }
+        if (id == R.id.action_refresh) {
+            return true;
+        }
+        if (id == R.id.action_new_list) {
+            list = new ItemList("TestList2");
+            itemListManager = new ItemListManager();
+            itemListManager.addList(list);
+            itemListManager.setCurrentList(list);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
-
-    public void onQuitClick(MenuItem item) {
-        finish();
-        System.exit(0);
+    public void urlOnClick(View view) {
+        Toast.makeText(this, "An item of the ListView is clicked.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?tbm=isch&q=El Paso"));
+        startActivity(intent);
     }
-
-    public void addListOnClick(MenuItem item) {
-        itemListManager.addList(new ItemList("TestList2"));
-    }
-
-    public void chooseListClick(View view) {
-        itemListManager.getItemLists();
-
-    }
-
-    public void onRefreshClick(MenuItem item) {
-    }
-
-    public void addItemOnClick(MenuItem item) {
-    }
-
-    public void filterListClick(View view) {
-    }
-
-    public void sortListClick(View view) {
-    }
-
-    //endregion
 }

@@ -21,11 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ItemListManager itemListManager;
+    private ItemDatabaseHelper dbHelper;
+    private ItemList list;
     private ItemAdapter itemAdapter;
     private ListView itemListView;
-    private ItemList list;
+    //private ItemList list; // temp list
 
 
     @Override
@@ -34,7 +34,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        list = new ItemList();
 
+        //temp list
+//        Item item = new Item("TestItem", "www.google.com", "Amazon");
+//        list = new ItemList("TestList");
+//        list.addItem(item);
+//        list.addItem(item);
+//        list.addItem(item);
+//        itemListManager = new ItemListManager();
+//        itemListManager.addList(list);
+//        itemListManager.setCurrentList(list);
+        //temp list
 
         list = new ItemList("TestList");
         Item item = new Item("DTestItem", "www.google.com", "Amazon");
@@ -57,12 +68,18 @@ public class MainActivity extends AppCompatActivity {
         //});
     }
 
-    public ItemList getList(){return ItemListManager.getCurrentList();}
+    public ItemList getList(){
+        return this.list;
+    }
+
     public void setList(ItemList list){
         this.list = list;
     }
-    public void addToList(Item item){
-        list.addItem(item);
+
+    public void urlOnClick(View view) {
+        Toast.makeText(this, "An item of the ListView is clicked.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?tbm=isch&q=El Paso"));
+        startActivity(intent);
     }
 
     @Override
@@ -77,25 +94,23 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_quit) {
-            finish();
-            System.exit(0);
-            return true;
+        switch(item.getItemId()){
+            case R.id.action_quit:
+                finish();
+                System.exit(0);
+                return true;
+            case R.id.action_refresh:
+                list.refreshItems();
+                //update list view with the updated items
+                return true;
+//            case R.id.action_new_list:
+//                list = new ItemList("TestList2");
+//                itemListManager.addList(list);
+//                itemListManager.setCurrentList(list);
+//                return true;
         }
-        if (id == R.id.action_refresh) {
-            return true;
-        }
-        if (id == R.id.action_new_list) {
-            list = new ItemList("TestList2");
-            itemListManager = new ItemListManager();
-            itemListManager.addList(list);
-            itemListManager.setCurrentList(list);
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

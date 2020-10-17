@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class CurListFragment extends Fragment {
     private ListView itemListView;
     private ItemAdapter itemAdapter;
     TextView listNameTextView;
+    ItemDatabaseHelper dbHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,9 +35,8 @@ public class CurListFragment extends Fragment {
         list.addItem(item2);
         //ListView itemListView = ((MainActivity)getActivity()).getListView();
         itemListView = view.findViewById(R.id.itemListView);
-
-        itemAdapter = new ItemAdapter(getActivity(), R.layout.item, ItemListManager.getCurrentList().getItems());
-
+        dbHelper = new ItemDatabaseHelper(this.getContext());
+        itemAdapter = new ItemAdapter(getActivity(), R.layout.item, dbHelper.allItems());
 
         //listNameTextView.setText(list.getName());
         //return inflater.inflate(R.layout.fragment_first, container, false);
@@ -78,6 +79,10 @@ public class CurListFragment extends Fragment {
                 // TODO: Add save edit code
                 break;
             case DELETE:
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                dbHelper.delete(item.getItemId());
+                itemAdapter.notifyDataSetChanged();
+                itemAdapter.remove(itemAdapter.getItem(info.position));
                 break;
         }
 

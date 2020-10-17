@@ -13,6 +13,10 @@ public class ItemList {
     private static List<Item> items = new ArrayList<>();
     private String name;
 
+    public ItemList(){
+        this.name = "New List";
+    }
+
     public ItemList(String name){
         this.name = name;
     }
@@ -45,8 +49,8 @@ public class ItemList {
         }
     }
 
-    public void removeItem(){
-
+    public void removeItem(Item item){
+        items.remove(item);
     }
 
     public static List<Item> sortByItemName(){

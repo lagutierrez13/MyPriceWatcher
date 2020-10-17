@@ -47,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
 //        itemListManager.setCurrentList(list);
         //temp list
 
+        list = new ItemList("TestList");
+        Item item = new Item("DTestItem", "www.google.com", "Amazon");
+        list.addItem(item);
+        Item item2 = new Item("CTestItem", "www.google.com", "Amazon");
+        list.addItem(item2);
+        list.addItem(item);
+        itemListManager = new ItemListManager();
+        itemListManager.addList(list);
+        itemListManager.setCurrentList(list);
         //itemListView = findViewById(R.id.itemListView);
 
         //listNameTextView.setText(list.getName());
@@ -103,5 +112,16 @@ public class MainActivity extends AppCompatActivity {
 //                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void urlOnClick(View view) {
+        Toast.makeText(this, "An item of the ListView is clicked.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?tbm=isch&q=El Paso"));
+        startActivity(intent);
+    }
+
+    public void sortListClick(View view) {
+        ItemList.sortByItemName();
+        Toast.makeText(this, "List Sorted.", Toast.LENGTH_SHORT).show();
     }
 }

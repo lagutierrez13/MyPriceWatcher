@@ -1,6 +1,8 @@
 package edu.utep.cs.cs4330.mypricewatcher;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /*
@@ -47,7 +49,15 @@ public class ItemList {
 
     }
 
-    public List<Item> sortByItemName(){
+    public static List<Item> sortByItemName(){
+        Collections.sort(items, new Comparator<Item>() {
+            @Override
+            public int compare(Item obj1, Item obj2) {
+                return obj1.getName().compareToIgnoreCase(obj2.getName()); // ascending order
+                //return 0;
+            }
+
+        });
         return items;
     }
 
@@ -56,6 +66,14 @@ public class ItemList {
     }
 
     public List<Item> filterBySourceName(){
+        Collections.sort(items, new Comparator<Item>() {
+            @Override
+            public int compare(Item obj1, Item obj2) {
+                return obj1.getName().compareToIgnoreCase(obj2.getName()); // ascending order
+                //return 0;
+            }
+
+        });
         return items;
     }
 

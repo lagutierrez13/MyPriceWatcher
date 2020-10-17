@@ -27,6 +27,10 @@ public class CurListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
 
         ItemList list = ((MainActivity)getActivity()).getList();
+        Item item = new Item("ATestItem", "www.google.com", "Amazon");
+        list.addItem(item);
+        Item item2 = new Item("XTestItem", "www.google.com", "Amazon");
+        list.addItem(item2);
         //ListView itemListView = ((MainActivity)getActivity()).getListView();
         itemListView = view.findViewById(R.id.itemListView);
 

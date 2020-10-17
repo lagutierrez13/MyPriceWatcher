@@ -43,6 +43,18 @@ public class Item {
         this.dateAdded = dateAdded;
     }
 
+    public Item(int id, String name, double initPrice, double currentPrice, String url, String sourceName, String dateAdded){
+        priceFinder = new PriceFinder();
+        this.id = id;
+        this.name = name;
+        this.initPrice = initPrice;
+        this.currentPrice = currentPrice;
+        this.url = url;
+        this.sourceName = sourceName;
+        this.change = calculateChange();
+        this.dateAdded = dateAdded;
+    }
+
     public Item(String name, String url, String sourceName){
         priceFinder = new PriceFinder();
         this.name = name;

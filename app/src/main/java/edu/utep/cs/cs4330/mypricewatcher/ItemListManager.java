@@ -33,12 +33,8 @@ public class ItemListManager {
         }
     }
 
-    public void removeList(){
-
-    }
-
-    public void moveItem(){
-
+    public void removeList(ItemList list){
+        itemLists.remove(list);
     }
 
     public boolean isEmpty(){

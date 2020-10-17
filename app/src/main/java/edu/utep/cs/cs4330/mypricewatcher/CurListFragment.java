@@ -30,7 +30,7 @@ public class CurListFragment extends Fragment {
         //ListView itemListView = ((MainActivity)getActivity()).getListView();
         itemListView = view.findViewById(R.id.itemListView);
 
-        itemAdapter = new ItemAdapter(getActivity(), R.layout.item, ItemListManager.getCurrentList().getItems());
+        itemAdapter = new ItemAdapter(getActivity(), R.layout.item, ItemListManager.getCurrentList().getItems()); //returns null
 
 
         //listNameTextView.setText(list.getName());

@@ -20,16 +20,15 @@ public class AddItemFragment extends Fragment {
     String source;
     String url;
 
-
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
-        newItemName = (EditText) view.findViewById(R.id.itemName);
-        newItemSource = (EditText) view.findViewById(R.id.itemSource);
-        newItemURL = (EditText) view.findViewById(R.id.itemURL);
+        newItemName = view.findViewById(R.id.itemName);
+        newItemSource = view.findViewById(R.id.itemSource);
+        newItemURL = view.findViewById(R.id.itemURL);
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_second, container, false);
@@ -37,25 +36,22 @@ public class AddItemFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
-        name = newItemName.getText().toString();
-
-        source = newItemSource.getText().toString();
-
-        url = newItemURL.getText().toString();
-
-
         view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //addToList(name, url, source);
-                Toast.makeText(getActivity(),"Added To List"+name +url +source, Toast.LENGTH_SHORT).show();
+                setItemValues();
+                addToList(name, url, source);
+                Toast.makeText(getActivity(),"Added To List "+ name + " " + url + " " + source, Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(AddItemFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
+    }
+
+    public void setItemValues(){
+        name = newItemName.getText().toString();
+        source = newItemSource.getText().toString();
+        url = newItemURL.getText().toString();
     }
 
     public void addToList(String name, String url, String source){
@@ -64,6 +60,5 @@ public class AddItemFragment extends Fragment {
         list.addItem(item);
         ((MainActivity) requireActivity()).setList(list);
         itemAdapter.notifyDataSetChanged();
-
     }
 }

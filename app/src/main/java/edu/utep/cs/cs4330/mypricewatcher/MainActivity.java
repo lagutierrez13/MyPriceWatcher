@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
+    private ItemDatabaseHelper dbHelper;
     private ItemList list;
     private ItemAdapter itemAdapter;
     private ListView itemListView;

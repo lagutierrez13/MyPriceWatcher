@@ -12,13 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 public class AddItemFragment extends Fragment {
+    ItemDatabaseHelper dbHelper;
     ItemAdapter itemAdapter;
     EditText newItemName;
     EditText newItemSource;
     EditText newItemURL;
-    String name;
-    String source;
-    String url;
 
     @Override
     public View onCreateView(
@@ -26,12 +24,13 @@ public class AddItemFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
+        dbHelper = new ItemDatabaseHelper(this.getContext());
         newItemName = view.findViewById(R.id.itemName);
         newItemSource = view.findViewById(R.id.itemSource);
         newItemURL = view.findViewById(R.id.itemURL);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false);
+        return view;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -39,23 +38,16 @@ public class AddItemFragment extends Fragment {
         view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setItemValues();
-                addToList(name, url, source);
-                Toast.makeText(getActivity(),"Added To List "+ name + " " + url + " " + source, Toast.LENGTH_SHORT).show();
+                Item itemToAdd = new Item(newItemName.getText().toString(), newItemURL.getText().toString(), newItemSource.getText().toString());
+                addToList(itemToAdd);
+                Toast.makeText(getActivity(),"Added To List "+ newItemName.getText().toString(), Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(AddItemFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
     }
 
-    public void setItemValues(){
-        name = newItemName.getText().toString();
-        source = newItemSource.getText().toString();
-        url = newItemURL.getText().toString();
-    }
-
-    public void addToList(String name, String url, String source){
-        Item item = new Item(name, url, source);
+    public void addToList(Item item){
         ItemList list = ((MainActivity) requireActivity()).getList();
         list.addItem(item);
         ((MainActivity) requireActivity()).setList(list);

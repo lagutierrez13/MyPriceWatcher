@@ -17,45 +17,19 @@ import androidx.navigation.fragment.NavHostFragment;
 
 public class CurListFragment extends Fragment {
     private static final int EDIT = 0, DELETE = 1;
-   // private ItemListManager itemListManager;
     private ListView itemListView;
     private ItemAdapter itemAdapter;
-    TextView listNameTextView;
     ItemDatabaseHelper dbHelper;
+    TextView listNameTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first, container, false);
-
-        ItemList list = ((MainActivity)getActivity()).getList();
-        Item item = new Item("ATestItem", "www.google.com", "Amazon");
-        list.addItem(item);
-        Item item2 = new Item("XTestItem", "www.google.com", "Amazon");
-        list.addItem(item2);
-        //ListView itemListView = ((MainActivity)getActivity()).getListView();
         itemListView = view.findViewById(R.id.itemListView);
         dbHelper = new ItemDatabaseHelper(this.getContext());
         itemAdapter = new ItemAdapter(getActivity(), R.layout.item, dbHelper.allItems());
-
-        //listNameTextView.setText(list.getName());
-        //return inflater.inflate(R.layout.fragment_first, container, false);
-        return view;
-    }
-
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        //ItemList list = ((MainActivity)getActivity()).getList();
-        //itemListView = view.findViewById(R.id.itemListView);
-        //listNameTextView = listNameTextView.findViewById(R.id.listNameTextView);
-        //listNameTextView.setText(list.getName());
-
         itemListView.setAdapter(itemAdapter);
-
         registerForContextMenu(itemListView);
-
         view.findViewById(R.id.add_item).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,14 +37,35 @@ public class CurListFragment extends Fragment {
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }
         });
+        return view;
     }
 
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, view, menuInfo);
 
-        menu.setHeaderTitle("Save Options");
-        menu.add(Menu.NONE, EDIT, menu.NONE, "Edit Save");
-        menu.add(Menu.NONE, DELETE, menu.NONE, "Delete Save");
+//    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//
+//        itemListView.setAdapter(itemAdapter);
+//        registerForContextMenu(itemListView);
+//        view.findViewById(R.id.add_item).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                NavHostFragment.findNavController(CurListFragment.this)
+//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+//            }
+//        });
+//    }
+
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        if(view.getId() == R.id.itemListView){
+            ListView lv = (ListView) view;
+            AdapterView.AdapterContextMenuInfo menuInfo1 = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            Item item = (Item) lv.getItemAtPosition(((AdapterView.AdapterContextMenuInfo) menuInfo).position);
+            menu.add(Menu.NONE, EDIT, menu.NONE, "Edit");
+            menu.add(Menu.NONE, DELETE, menu.NONE, "Delete");
+        }
+//        super.onCreateContextMenu(menu, view, menuInfo);
+//        menu.setHeaderTitle("Item Options");
+
     }
 
     public boolean onContextItemSelected(MenuItem item) {

@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private ItemDatabaseHelper dbHelper;
-    private ItemList list;
+    private ItemAdapter itemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,29 +31,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         dbHelper = new ItemDatabaseHelper(this);
-        list = new ItemList();
-
-        // TEMP
-        Item item = new Item("TestItem", "www.google.com", "Amazon");
-        list = new ItemList("TestList");
-        dbHelper.addItem(item);
-        // TEMP
-
-
-        //itemAdapter = new ItemAdapter(this, R.layout.item, ItemListManager.getCurrentList().getItems());
-        //itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        //    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //        Toast.makeText(getApplication(), "An item of the ListView is clicked.", Toast.LENGTH_LONG).show();
-        //    }
-        //});
+        itemAdapter = new ItemAdapter(this, R.layout.item, dbHelper.allItems());
     }
 
-    public ItemList getList(){
-        return this.list;
+    public ItemDatabaseHelper getDbHelper(){
+        return dbHelper;
     }
 
-    public void setList(ItemList list){
-        this.list = list;
+    public ItemAdapter getItemAdapter() {
+        return itemAdapter;
     }
 
     public void urlOnClick(View view) {
@@ -76,16 +62,15 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         //noinspection SimplifiableIfStatement
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_quit:
                 finish();
                 System.exit(0);
                 return true;
             case R.id.action_refresh:
-                list.refreshItems();
                 //update list view with the updated items
                 return true;
-//            case R.id.action_new_list:
+//          case R.id.action_new_list:
 //                list = new ItemList("TestList2");
 //                itemListManager.addList(list);
 //                itemListManager.setCurrentList(list);

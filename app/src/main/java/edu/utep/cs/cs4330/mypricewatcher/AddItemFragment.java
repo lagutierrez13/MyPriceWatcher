@@ -24,7 +24,8 @@ public class AddItemFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
-        dbHelper = new ItemDatabaseHelper(this.getContext());
+        dbHelper = ((MainActivity)getActivity()).getDbHelper();
+        itemAdapter = ((MainActivity)getActivity()).getItemAdapter();
         newItemName = view.findViewById(R.id.itemName);
         newItemSource = view.findViewById(R.id.itemSource);
         newItemURL = view.findViewById(R.id.itemURL);
@@ -40,17 +41,16 @@ public class AddItemFragment extends Fragment {
             public void onClick(View view) {
                 Item itemToAdd = new Item(newItemName.getText().toString(), newItemURL.getText().toString(), newItemSource.getText().toString());
                 addToList(itemToAdd);
-                Toast.makeText(getActivity(),"Added To List "+ newItemName.getText().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Added To List " + newItemName.getText().toString(), Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(AddItemFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
     }
 
-    public void addToList(Item item){
-        ItemList list = ((MainActivity) requireActivity()).getList();
-        list.addItem(item);
-        ((MainActivity) requireActivity()).setList(list);
+    public void addToList(Item item) {
+        dbHelper.addItem(item);
+        itemAdapter.add(item);
         itemAdapter.notifyDataSetChanged();
     }
 }

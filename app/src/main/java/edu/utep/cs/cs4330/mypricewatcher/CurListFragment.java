@@ -19,44 +19,24 @@ public class CurListFragment extends Fragment {
     private static final int EDIT = 0, DELETE = 1;
     private ListView itemListView;
     private ItemAdapter itemAdapter;
-    ItemDatabaseHelper dbHelper;
+    private ItemDatabaseHelper dbHelper;
     TextView listNameTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         itemListView = view.findViewById(R.id.itemListView);
-        dbHelper = new ItemDatabaseHelper(this.getContext());
-        itemAdapter = new ItemAdapter(getActivity(), R.layout.item, dbHelper.allItems());
+        dbHelper = ((MainActivity)getActivity()).getDbHelper();
+        itemAdapter = ((MainActivity)getActivity()).getItemAdapter();
         itemListView.setAdapter(itemAdapter);
         registerForContextMenu(itemListView);
-        view.findViewById(R.id.add_item).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(CurListFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            }
-        });
+        view.findViewById(R.id.add_item).setOnClickListener(view1 -> NavHostFragment.findNavController(CurListFragment.this)
+                .navigate(R.id.action_FirstFragment_to_SecondFragment));
         return view;
     }
 
-
-//    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//
-//        itemListView.setAdapter(itemAdapter);
-//        registerForContextMenu(itemListView);
-//        view.findViewById(R.id.add_item).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(CurListFragment.this)
-//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-//            }
-//        });
-//    }
-
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        if(view.getId() == R.id.itemListView){
+        if (view.getId() == R.id.itemListView) {
             ListView lv = (ListView) view;
             AdapterView.AdapterContextMenuInfo menuInfo1 = (AdapterView.AdapterContextMenuInfo) menuInfo;
             Item item = (Item) lv.getItemAtPosition(((AdapterView.AdapterContextMenuInfo) menuInfo).position);
@@ -65,7 +45,6 @@ public class CurListFragment extends Fragment {
         }
 //        super.onCreateContextMenu(menu, view, menuInfo);
 //        menu.setHeaderTitle("Item Options");
-
     }
 
     public boolean onContextItemSelected(MenuItem item) {
@@ -83,5 +62,4 @@ public class CurListFragment extends Fragment {
 
         return super.onContextItemSelected(item);
     }
-
 }

@@ -3,11 +3,18 @@ package edu.utep.cs.cs4330.mypricewatcher;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/*
+    Authors: Luis Gutierrez Antonio Zavala
+    Class: CS4330
+ */
 
 public class ItemDatabaseHelper extends SQLiteOpenHelper {
 
@@ -17,14 +24,14 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String KEY_ID = "_id";
     private static final String KEY_NAME = "name";
-    private static final String KEY_INIT_PRICE = "init price";
-    private static final String KEY_CURR_PRICE = "curr price";
+    private static final String KEY_INIT_PRICE = "init_price";
+    private static final String KEY_CURR_PRICE = "curr_price";
     private static final String KEY_URL = "url";
-    private static final String KEY_DATE_ADDED = "date added";
-    private static final String KEY_SOURCE_NAME = "source name";
+    private static final String KEY_DATE_ADDED = "date_added";
+    private static final String KEY_SOURCE_NAME = "source_name";
 
-    public ItemDatabaseHelper(Context context){
-        super (context, DB_NAME, null, DB_VERSION);
+    public ItemDatabaseHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
@@ -36,7 +43,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
                 + KEY_CURR_PRICE + " REAL, "
                 + KEY_URL + " TEXT, "
                 + KEY_DATE_ADDED + " TEXT, "
-                + KEY_SOURCE_NAME + " TEXT" + ")";
+                + KEY_SOURCE_NAME + " TEXT " + ")";
         db.execSQL(table);
     }
 
@@ -47,17 +54,22 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void addItem(Item item) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, item.getName());
-        values.put(KEY_INIT_PRICE, item.getInitPrice());
-        values.put(KEY_CURR_PRICE, item.getCurrentPrice());
-        values.put(KEY_URL, item.getUrl());
-        values.put(KEY_DATE_ADDED, item.getDateAdded());
-        values.put(KEY_SOURCE_NAME, item.getSourceName());
-        long id = db.insert(ITEM_TABLE, null, values);
-        item.setId((int) id);
-        db.close();
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(KEY_NAME, item.getName());
+            values.put(KEY_INIT_PRICE, item.getInitPrice());
+            values.put(KEY_CURR_PRICE, item.getCurrentPrice());
+            values.put(KEY_URL, item.getUrl());
+            values.put(KEY_DATE_ADDED, item.getDateAdded());
+            values.put(KEY_SOURCE_NAME, item.getSourceName());
+            long id = db.insert(ITEM_TABLE, null, values);
+            item.setId((int) id);
+            db.close();
+        } catch (SQLException e) {
+            Log.e("Exception", "SQLException" + String.valueOf(e.getMessage()));
+            e.printStackTrace();
+        }
     }
 
     public List<Item> allItems() {
@@ -90,11 +102,11 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 
     public void delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(ITEM_TABLE, KEY_ID + " = ?", new String[] { Integer.toString(id) } );
+        db.delete(ITEM_TABLE, KEY_ID + " = " + id, new String[]{Integer.toString(id)});
         db.close();
     }
 
-    public void update(Item item) {
+    public void update(int id, Item item) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, item.getName());
@@ -103,7 +115,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_URL, item.getUrl());
         values.put(KEY_DATE_ADDED, item.getDateAdded());
         values.put(KEY_SOURCE_NAME, item.getSourceName());
-        db.update(ITEM_TABLE, values, KEY_ID + " = ?", new String[]{String.valueOf(item.id())});
+        db.update(ITEM_TABLE, values, KEY_ID + " = " + id, new String[]{String.valueOf(item.id())});
         db.close();
     }
 

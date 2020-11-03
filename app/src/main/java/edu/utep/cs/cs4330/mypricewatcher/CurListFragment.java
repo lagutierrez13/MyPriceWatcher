@@ -18,17 +18,13 @@ import androidx.navigation.fragment.NavHostFragment;
 public class CurListFragment extends Fragment {
     private static final int EDIT = 0, DELETE = 1;
     private ListView itemListView;
-    private ItemAdapter itemAdapter;
-    private ItemDatabaseHelper dbHelper;
     TextView listNameTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         itemListView = view.findViewById(R.id.itemListView);
-        dbHelper = ((MainActivity)getActivity()).getDbHelper();
-        itemAdapter = ((MainActivity)getActivity()).getItemAdapter();
-        itemListView.setAdapter(itemAdapter);
+        itemListView.setAdapter(((MainActivity)getActivity()).getItemAdapter());
         registerForContextMenu(itemListView);
         view.findViewById(R.id.add_item).setOnClickListener(view1 -> NavHostFragment.findNavController(CurListFragment.this)
                 .navigate(R.id.action_FirstFragment_to_SecondFragment));
@@ -54,9 +50,9 @@ public class CurListFragment extends Fragment {
                 break;
             case DELETE:
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                dbHelper.delete(item.getItemId());
-                itemAdapter.notifyDataSetChanged();
-                itemAdapter.remove(itemAdapter.getItem(info.position));
+                ((MainActivity)getActivity()).getDbHelper().delete(item.getItemId());
+                ((MainActivity)getActivity()).getItemAdapter().remove(((MainActivity)getActivity()).getItemAdapter().getItem(info.position));
+                ((MainActivity)getActivity()).getItemAdapter().notifyDataSetChanged();
                 break;
         }
 

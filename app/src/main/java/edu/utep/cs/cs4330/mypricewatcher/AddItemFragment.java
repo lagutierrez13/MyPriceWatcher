@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 public class AddItemFragment extends Fragment {
-    ItemDatabaseHelper dbHelper;
-    ItemAdapter itemAdapter;
     EditText newItemName;
     EditText newItemSource;
     EditText newItemURL;
@@ -24,8 +22,6 @@ public class AddItemFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
-        dbHelper = ((MainActivity)getActivity()).getDbHelper();
-        itemAdapter = ((MainActivity)getActivity()).getItemAdapter();
         newItemName = view.findViewById(R.id.itemName);
         newItemSource = view.findViewById(R.id.itemSource);
         newItemURL = view.findViewById(R.id.itemURL);
@@ -49,8 +45,8 @@ public class AddItemFragment extends Fragment {
     }
 
     public void addToList(Item item) {
-        dbHelper.addItem(item);
-        itemAdapter.add(item);
-        itemAdapter.notifyDataSetChanged();
+        ((MainActivity)getActivity()).getDbHelper().addItem(item);
+        ((MainActivity)getActivity()).getItemAdapter().add(item);
+        ((MainActivity)getActivity()).getItemAdapter().notifyDataSetChanged();
     }
 }

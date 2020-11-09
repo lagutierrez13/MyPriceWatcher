@@ -18,7 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 public class CurListFragment extends Fragment {
     private static final int EDIT = 0, DELETE = 1;
     private ListView itemListView;
-    TextView listNameTextView;
+    private TextView listNameTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,18 +31,24 @@ public class CurListFragment extends Fragment {
         return view;
     }
 
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         if (view.getId() == R.id.itemListView) {
             ListView lv = (ListView) view;
-            AdapterView.AdapterContextMenuInfo menuInfo1 = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            Item item = (Item) lv.getItemAtPosition(((AdapterView.AdapterContextMenuInfo) menuInfo).position);
-            menu.add(Menu.NONE, EDIT, menu.NONE, "Edit");
-            menu.add(Menu.NONE, DELETE, menu.NONE, "Delete");
+            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            Item item = (Item) lv.getItemAtPosition(adapterContextMenuInfo.position);
+
+            menu.add(0, item.id(), 0, "Delete: " + item.getName());
+            menu.add(1, item.id(), 1, "Edit: " + item.getName());
+
+//            menu.add(Menu.NONE, EDIT, menu.NONE, "Edit");
+//            menu.add(Menu.NONE, DELETE, menu.NONE, "Delete");
         }
 //        super.onCreateContextMenu(menu, view, menuInfo);
 //        menu.setHeaderTitle("Item Options");
     }
 
+    @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case EDIT:

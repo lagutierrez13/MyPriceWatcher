@@ -1,6 +1,8 @@
 package edu.utep.cs.cs4330.mypricewatcher;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,11 @@ import java.util.List;
     Authors: Luis Gutierrez and Antonio Zavala
     Class: CS4330
  */
-/** Provide views for an AdapterView by returning a view
- * for each ToDoItem contained in a list. */
+
+/**
+ * Provide views for an AdapterView by returning a view
+ * for each ToDoItem contained in a list.
+ */
 public class ItemAdapter extends ArrayAdapter<Item> {
 
     private TextView nameTextView;
@@ -41,12 +46,12 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             addedTextView = convertView.findViewById(R.id.addedTextView);
             launchUrlButton = convertView.findViewById(R.id.launchUrlButton);
 
-            //launchUrlButton.setOnClickListener(view -> {
-            //    ImageButton launchUrl = (ImageButton) view;
-            //   Item item = (Item) launchUrl.getTag();
-            //    Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?tbm=isch&q=El Paso"));
-            //    startActivity(intent);
-            //});
+//            launchUrlButton.setOnClickListener(view -> {
+//                ImageButton launchUrl = (ImageButton) view;
+//                Item item = (Item) launchUrl.getTag();
+//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?tbm=isch&q=El Paso"));
+//                startActivity(intent);
+//            });
         }
 
         Item current = getItem(position);

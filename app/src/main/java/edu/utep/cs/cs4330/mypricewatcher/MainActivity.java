@@ -1,5 +1,6 @@
 package edu.utep.cs.cs4330.mypricewatcher;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +21,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         dbHelper = new ItemDatabaseHelper(this);
         itemAdapter = new ItemAdapter(this, R.layout.item, dbHelper.allItems());
+
+        String action = getIntent().getAction();
+        String type = getIntent().getType();
+
+        if(Intent.ACTION_SEND.equalsIgnoreCase(action) && ("text/plain".equalsIgnoreCase(type))){
+            String url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            Toast.makeText(this, "URL from browser: " + url, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public ItemDatabaseHelper getDbHelper(){

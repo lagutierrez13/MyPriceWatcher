@@ -26,27 +26,23 @@ public class AddItemFragment extends Fragment {
         newItemSource = view.findViewById(R.id.itemSource);
         newItemURL = view.findViewById(R.id.itemURL);
 
-        // Inflate the layout for this fragment
         return view;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Item itemToAdd = new Item(newItemName.getText().toString(), newItemURL.getText().toString(), newItemSource.getText().toString());
-                addToList(itemToAdd);
-                Toast.makeText(getActivity(), "Added To List " + newItemName.getText().toString(), Toast.LENGTH_SHORT).show();
-                NavHostFragment.findNavController(AddItemFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
-            }
+        view.findViewById(R.id.button_second).setOnClickListener(view1 -> {
+            Item itemToAdd = new Item(newItemName.getText().toString(), newItemURL.getText().toString(), newItemSource.getText().toString());
+            addToList(itemToAdd);
+            Toast.makeText(getActivity(), "Added To List " + newItemName.getText().toString(), Toast.LENGTH_SHORT).show();
+            NavHostFragment.findNavController(AddItemFragment.this)
+                    .navigate(R.id.action_SecondFragment_to_FirstFragment);
         });
     }
 
     public void addToList(Item item) {
-        ((MainActivity)getActivity()).getDbHelper().addItem(item);
-        ((MainActivity)getActivity()).getItemAdapter().add(item);
-        ((MainActivity)getActivity()).getItemAdapter().notifyDataSetChanged();
+        ((MainActivity) getActivity()).getDbHelper().addItem(item);
+        ((MainActivity) getActivity()).getItemAdapter().add(item);
+        ((MainActivity) getActivity()).getItemAdapter().notifyDataSetChanged();
     }
 }

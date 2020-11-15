@@ -29,11 +29,21 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private TextView priceTextView;
     private TextView changeTextView;
     private TextView addedTextView;
+    private ListView listView;
     private ImageButton launchUrlButton;
-    private TextView productText;
 
     public ItemAdapter(Context context, int resourceId, List<Item> items) {
         super(context, resourceId, items);
+    }
+
+    public interface ItemClickListener {
+        void itemClicked(Item item);
+    }
+
+    private ItemClickListener listener;
+
+    public void setItemClickListener(ItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -45,16 +55,25 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             changeTextView = convertView.findViewById(R.id.changeTextView);
             addedTextView = convertView.findViewById(R.id.addedTextView);
             launchUrlButton = convertView.findViewById(R.id.launchUrlButton);
-
-//            launchUrlButton.setOnClickListener(view -> {
-//                ImageButton launchUrl = (ImageButton) view;
-//                Item item = (Item) launchUrl.getTag();
-//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?tbm=isch&q=El Paso"));
-//                startActivity(intent);
-//            });
+            listView = convertView.findViewById(R.id.itemListView);
         }
 
         Item current = getItem(position);
+
+        launchUrlButton.setTag(current);
+        launchUrlButton.setOnClickListener(v -> {
+            Uri site = Uri.parse(current.getUrl());
+            if (!current.getUrl().startsWith("http://") && !current.getUrl().startsWith("https://")) {
+                site = Uri.parse("http://" + current.getUrl());
+            }
+            Toast.makeText(v.getContext(), "Opening: " + site, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Intent.ACTION_VIEW, site);
+            getContext().startActivity(intent);
+            if (listener != null) {
+                listener.itemClicked(current);
+            }
+        });
+
         nameTextView = convertView.findViewById(R.id.nameTextView);
         assert current != null;
         nameTextView.setText(current.getName());
@@ -74,5 +93,4 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         return convertView;
     }
-
 }

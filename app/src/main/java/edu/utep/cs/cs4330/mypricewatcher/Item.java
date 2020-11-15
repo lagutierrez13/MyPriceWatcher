@@ -1,9 +1,5 @@
 package edu.utep.cs.cs4330.mypricewatcher;;
 
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.Toast;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,9 +17,8 @@ public class Item {
     private String dateAdded;
     private String sourceName;
     private PriceFinder priceFinder;
-    private ImageButton launchUrlButton;
-
     private int id;
+
     //region Constructors
     public int id() {
         return id;
@@ -126,7 +121,7 @@ public class Item {
             percDif = Math.round(percDif * 100d) /100d;
 
             if (percDif == 0){
-                perDifStr = "Price Haven't Changed";
+                perDifStr = "Price hasn't changed";
                 return perDifStr;
             }
             else if (percDif < 0){
